@@ -8,9 +8,9 @@ public class Counter
     count=0;
   }
 
-  public int increament(){
+  public synchronized void increament(){
 
-    return count++;
+    count++;
   }
 
   public int getCount(){
