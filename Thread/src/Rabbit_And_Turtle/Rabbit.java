@@ -15,7 +15,7 @@ public class Rabbit implements Runnable
   public void rabbitSleep(){
     while (points.getRabbitPoint()- points.getTurtlePoint()==50){
       Random random = new Random();
-
+      int randomNumber = random.nextInt(1000);
     }
     {
       try
