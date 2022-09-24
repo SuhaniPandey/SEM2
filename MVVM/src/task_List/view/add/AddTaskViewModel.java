@@ -20,7 +20,6 @@ public class AddTaskViewModel
 
   public void addNewTask(){
     model.addTask(creator.getValue(), description.getValue());
-    System.out.println(creator.getValue()+description.getValue());
     creator.setValue("");
     description.setValue("");
   }

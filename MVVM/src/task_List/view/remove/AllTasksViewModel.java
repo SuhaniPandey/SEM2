@@ -22,11 +22,13 @@ public class AllTasksViewModel
 
   private void taskRemoved(PropertyChangeEvent event)
   {
+
     tasks.remove((Task) event.getNewValue());
   }
 
   private void taskAdded(PropertyChangeEvent event)
   {
+    System.out.println("Event fired");
     tasks.add((Task) event.getNewValue());
   }
 
