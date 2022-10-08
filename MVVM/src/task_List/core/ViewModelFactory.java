@@ -18,7 +18,7 @@ public class ViewModelFactory
   public AddTaskViewModel getAddTaskViewModel()
   {
     if (addTaskViewModel== null){
-      addTaskViewModel= new AddTaskViewModel(modelFactory.getTaskModelManager());
+      addTaskViewModel= new AddTaskViewModel(modelFactory.getTaskModel());
     }
     return addTaskViewModel;
   }
@@ -26,7 +26,7 @@ public class ViewModelFactory
   public AllTasksViewModel getAllTasksViewModel()
   {
     if (allTasksViewModel== null){
-      allTasksViewModel= new AllTasksViewModel(modelFactory.getTaskModelManager());
+      allTasksViewModel= new AllTasksViewModel(modelFactory.getTaskModel());
     }
     return allTasksViewModel;
   }
@@ -35,7 +35,7 @@ public class ViewModelFactory
   {
     if (nextTaskViewModel== null){
       nextTaskViewModel= new NextTaskViewModel(
-          modelFactory.getTaskModelManager());
+          modelFactory.getTaskModel());
     }
     return nextTaskViewModel;
   }

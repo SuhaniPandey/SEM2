@@ -1,0 +1,2 @@
+LogLine{text='LogLine{text='sdf', dateTime=04/10/2022 10:06:52}', dateTime=04/10/2022 10:06:52}
+LogLine{text='LogLine{text='gdbefbv', dateTime=04/10/2022 10:07:33}', dateTime=04/10/2022 10:07:33}

@@ -5,11 +5,14 @@ import task_List.model.TaskModelManager;
 
 public class ModelFactory
 {
-  private TaskModel taskModelManager;
+  private TaskModel taskModel;
 
-  public TaskModel getTaskModelManager(){
-    taskModelManager= new TaskModelManager();
-    return taskModelManager;
+  public TaskModel getTaskModel(){
+    if (taskModel == null)
+    {
+      taskModel = new TaskModelManager();
+    }
+    return taskModel;
   }
 
 }
