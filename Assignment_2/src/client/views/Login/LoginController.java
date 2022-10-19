@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+
 public class LoginController
 {
   
@@ -25,7 +27,8 @@ public class LoginController
   {
   }
 
-  public void onRegisterButton(ActionEvent actionEvent)
+  public void onRegisterButton(ActionEvent actionEvent) throws IOException
   {
+    viewHandler.openRegisterpage();
   }
 }

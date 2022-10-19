@@ -20,7 +20,8 @@ public class ViewHandler
     this.viewModelFactory=viewModelFactory;
   }
 
-  public void start(){
+  public void start() throws IOException
+  {
     stage= new Stage();
      openRegisterpage();
   }
@@ -28,7 +29,7 @@ public class ViewHandler
   public void openLoginPage(){
     FXMLLoader loader= new FXMLLoader();
 
-    Parent root= loadFXMLFiles("client/views/Login/Login.fxml",loader);
+    Parent root= loadFXMLFiles("/client/views/Login/Login.fxml",loader);
     LoginController loginController= loader.getController();
     loginController.init(this, viewModelFactory.getLoginViewModel());
 
@@ -39,10 +40,13 @@ public class ViewHandler
     stage.show();
   }
 
-  public void openRegisterpage(){
-    FXMLLoader loader= new FXMLLoader();
+  public void openRegisterpage() throws IOException
+  {
 
-    Parent root= loadFXMLFiles("client/views/Register/Register.fxml",loader);
+
+  FXMLLoader loader= new FXMLLoader();
+    Parent root= loadFXMLFiles("/client/views/Register/Register.fxml",loader);
+
     RegisterController registerController= loader.getController();
     registerController.init(this,viewModelFactory.getRegisterViewModel());
 
