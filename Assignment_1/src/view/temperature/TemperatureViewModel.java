@@ -30,6 +30,7 @@ public class TemperatureViewModel
   private void outdoorTemperature(PropertyChangeEvent event)
   {
     Temperature temperature=(Temperature) event.getNewValue();
+    System.out.println(temperature);
     if (temperature.getId().equals("t0")){
       Platform.runLater(()-> thermometer0Label.set((temperature.getValue()+"")));
 

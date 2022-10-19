@@ -21,7 +21,7 @@ public class MyApplication extends Application
     thread2.start();
 
     // View
-    ViewHandler view = new ViewHandler(model);
-    view.start(primaryStage);
+    //ViewHandler view = new ViewHandler(model);
+    //view.start(primaryStage);
   }
 }

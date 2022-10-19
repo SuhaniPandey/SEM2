@@ -28,7 +28,6 @@ public class AllTasksViewModel
 
   private void taskAdded(PropertyChangeEvent event)
   {
-    System.out.println("Event fired");
     tasks.add((Task) event.getNewValue());
   }
 

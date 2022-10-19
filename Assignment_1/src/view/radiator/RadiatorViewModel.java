@@ -21,7 +21,18 @@ public class RadiatorViewModel
     currentStateLabel= new SimpleStringProperty();
     stateChangedLabel= new SimpleStringProperty();
     currentStateLabel.set(String.valueOf(radiator.getPower()));
+    radiator.addListener("TemperatureUpdate", this::update);
 
+  }
+
+  private void update(PropertyChangeEvent event)
+  {
+    Integer newValue =(Integer) event.getNewValue();
+    new Thread(()->{
+      Platform.runLater(()->{
+        currentStateLabel.setValue(newValue + "");
+      });
+    }).start();
   }
 
   public StringProperty getStateChangedLabel(){
@@ -42,26 +53,12 @@ public class RadiatorViewModel
 
   public void onDecreaseButton(){
     radiator.turnDown();
-    radiator.getPower();
-    Platform.runLater(() ->currentStateLabel.setValue(String.valueOf(radiator.getPower())));
-    if (radiator.getPower()==0){
-      Platform.runLater(() ->stateChangedLabel.setValue("Its gonna be freezing cold....temperature is minimum at "));
-    }
-    else {
-      Platform.runLater(() ->stateChangedLabel.setValue(""));
-    }
+
   }
 
   public void onIncreaseButton(){
     radiator.turnUp();
-    radiator.getPower();
-    Platform.runLater(() ->currentStateLabel.setValue(String.valueOf(radiator.getPower())));
-    if (radiator.getPower()==3){
-      Platform.runLater(() ->stateChangedLabel.setValue("wanna boil your blood cuz temperature is at max...."));
-    }
-    else {
-      Platform.runLater(() ->stateChangedLabel.setValue(""));
-    }
+
   }
 
 

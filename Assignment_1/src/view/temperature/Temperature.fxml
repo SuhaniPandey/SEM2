@@ -24,7 +24,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="thermomter1Label" layoutX="139.0" layoutY="65.0" prefHeight="25.0" prefWidth="121.0" text="Label" textFill="#020202">
+            <Label fx:id="thermometer1Label" layoutX="139.0" layoutY="65.0" prefHeight="25.0" prefWidth="121.0" text="Label" textFill="#020202">
                <font>
                   <Font size="15.0" />
                </font></Label>

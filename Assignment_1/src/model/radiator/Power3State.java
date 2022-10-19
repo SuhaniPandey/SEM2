@@ -10,7 +10,7 @@ public class Power3State implements RadiatorState
      thread= new Thread (()->{
       try{
         Thread.sleep(3000);
-        radiator.setPowerState(new Power2State());
+        radiator.turnDown();
         System.out.println("Changed to power 2 state");
       }
       catch (InterruptedException e){

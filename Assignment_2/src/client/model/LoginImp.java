@@ -1,0 +1,44 @@
+package client.model;
+
+import client.networking.Client;
+import shared.User;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
+public class LoginImp implements LoginModel
+{
+  private Client client;
+  private User user;
+  private PropertyChangeSupport support;
+  public LoginImp(Client client)
+  {
+    this.client=client;
+    support= new PropertyChangeSupport(this);
+    client.addListener("userAdded",this::userAdded);
+  }
+
+  private void userAdded(PropertyChangeEvent event)
+  {
+    support.firePropertyChange("userAdded",null,event.getNewValue());
+  }
+
+  @Override public boolean addUser(String username, String password)
+  {
+    User user1= new User(username,password);
+    return client.addUser(user1);
+  }
+
+  @Override public void addListener(String eventName,
+      PropertyChangeListener listener)
+  {
+    support.addPropertyChangeListener(eventName, listener);
+  }
+
+  @Override public void removeListener(String eventName,
+      PropertyChangeListener listener)
+  {
+    support.removePropertyChangeListener(eventName,listener);
+  }
+}

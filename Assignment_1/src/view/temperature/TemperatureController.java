@@ -22,7 +22,7 @@ public class TemperatureController
     this.temperatureViewModel=temperatureViewModel;
     this.viewHandler=viewHandler;
     thermometer0Label.textProperty().bind(temperatureViewModel.thermometer0LabelProperty());
-    thermomter1Label.textProperty().bind(temperatureViewModel.getThermometer1Label());
+//    thermomter1Label.textProperty().bind(temperatureViewModel.getThermometer1Label());
     thermometer2Label.textProperty().bind(temperatureViewModel.thermometer2LabelProperty());
     highTemperatureLabel.textProperty().bind(temperatureViewModel.highTemperatureLabelProperty());
     lowTemperatureLabel.textProperty().bind(temperatureViewModel.lowTemperatureLabelProperty());

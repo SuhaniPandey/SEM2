@@ -28,6 +28,12 @@ public class TemperatureModelManager implements TemperatureModel
     }
 
   }
+  @Override public void addOutDoorTemp(String id, double value)
+  {
+    Temperature temperature= new Temperature(id,value);
+    this.temperatureList.addTemperature(temperature);
+    support.firePropertyChange("OutsideTemperature",null,temperature);
+  }
 
   @Override public Temperature getLastInsertedTemperature()
   {
@@ -39,12 +45,7 @@ public class TemperatureModelManager implements TemperatureModel
     return temperatureList.getLastTemperature(id);
   }
 
-  @Override public void addOutDoorTemp(String id, double value)
-  {
-    Temperature temperature= new Temperature(id,value);
-    support.firePropertyChange("OutsideTemperature",null,temperature);
 
-  }
 
   public void addListener(String propertName,
       PropertyChangeListener listener)

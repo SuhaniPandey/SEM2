@@ -27,7 +27,7 @@ public class ViewHandler extends Application
  {
     this.primaryStage = primaryStage;
    this.currentScene = new Scene(new Region());
-   openView("temperature");
+  // openView("temperature");
   }
 //
 //  public void openView(String id)
