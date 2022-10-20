@@ -20,6 +20,11 @@ public class RegisterController
   public void init(ViewHandler viewHandler, RegisterViewModel registerViewModel){
     this.viewHandler= viewHandler;
     this.registerViewModel=registerViewModel;
+    usernameRegister.textProperty().bindBidirectional(registerViewModel.usernameRegisterProperty());
+    passswordRegister.textProperty().bindBidirectional(registerViewModel.passswordRegisterProperty());
+    reenterRegister.textProperty().bindBidirectional(registerViewModel.reenterRegisterProperty());
+    label.textProperty().bind(registerViewModel.labelProperty());
+
   }
 
   public void onSignUpButton(ActionEvent actionEvent)

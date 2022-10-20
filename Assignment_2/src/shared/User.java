@@ -23,4 +23,11 @@ public class User implements Serializable
   {
     return password;
   }
+
+  public boolean equals(Object obj){
+    if (!(obj instanceof User user)){
+      return false;
+    }
+    return user.getUserName().equals(userName) && user.getPassword().equals(password);
+  }
 }

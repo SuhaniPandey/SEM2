@@ -30,6 +30,18 @@ public class LoginImp implements LoginModel
     return client.addUser(user1);
   }
 
+  @Override public User getUser()
+  {
+    return user;
+  }
+
+  @Override public boolean login(User user)
+  {
+    boolean isloginPossible= client.login(user);
+    if (isloginPossible)this.user=user;
+    return isloginPossible;
+  }
+
   @Override public void addListener(String eventName,
       PropertyChangeListener listener)
   {

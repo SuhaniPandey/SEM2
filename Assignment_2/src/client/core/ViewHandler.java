@@ -1,5 +1,7 @@
 package client.core;
 
+import client.views.Chat.ChatController;
+import client.views.Chat.ChatViewModel;
 import client.views.Login.LoginController;
 import client.views.Register.RegisterController;
 import client.views.ViewController;
@@ -13,7 +15,7 @@ import java.io.IOException;
 public class ViewHandler
 {
   private Stage stage;
-  private Scene loginScene, registerScene;
+  private Scene loginScene, registerScene,globalChatScene,indivisualChatScene;
   private ViewModelFactory viewModelFactory;
 
   public ViewHandler(ViewModelFactory viewModelFactory){
@@ -57,6 +59,33 @@ public class ViewHandler
     stage.show();
   }
 
+  public void openGlobalChatPage(){
+    FXMLLoader loader= new FXMLLoader();
+    Parent root= loadFXMLFiles("/client/views/Chat/Chat.fxml",loader);
+
+    ChatController chatController = loader.getController();
+    chatController.init(this,viewModelFactory.getChatViewModel());
+
+    globalChatScene= new Scene(root);
+    stage.setTitle("Global Chat");
+    stage.setResizable(false);
+    stage.setScene(globalChatScene);
+    stage.show();
+  }
+
+  public void openIndivisualChatPage(){
+    FXMLLoader loader= new FXMLLoader();
+    Parent root= loadFXMLFiles("/client/views/Chat/IndivisualChat.fxml",loader);
+
+    ChatController chatController= loader.getController();
+    chatController.init(this,viewModelFactory.getChatViewModel());
+
+    indivisualChatScene= new Scene(root);
+    stage.setTitle("Indivisual Chat");
+    stage.setResizable(false);
+    stage.setScene(indivisualChatScene);
+    stage.show();
+  }
   private Parent loadFXMLFiles(String path, FXMLLoader loader)
   {
     loader.setLocation(getClass().getResource(path));

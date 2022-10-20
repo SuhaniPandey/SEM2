@@ -14,7 +14,7 @@ public class ServerUpperCase
 
     try
     {
-      ServerSocket welcomeSocket= new ServerSocket(2002);
+      ServerSocket welcomeSocket= new ServerSocket(2001);
       while (true){
         Socket socket= welcomeSocket.accept();
         System.out.println("Client Connected.....");

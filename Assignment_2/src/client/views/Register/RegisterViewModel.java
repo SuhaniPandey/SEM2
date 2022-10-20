@@ -40,7 +40,7 @@ public class RegisterViewModel
 
   public void onRegister(String username, String password, String re_enter)
   {
-    if (username.equals(""))
+    if (username == null)
     {
       label.set("Username is empty");
     }

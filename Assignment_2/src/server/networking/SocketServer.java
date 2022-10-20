@@ -17,11 +17,12 @@ public class SocketServer
   public void startServer(){
     try
     {
-      ServerSocket socket= new ServerSocket(2002);
+      ServerSocket socket= new ServerSocket(2001);
       System.out.println("Server starting...");
       while (true){
         Socket socket1= socket.accept();
-        Thread th= new Thread();
+        ServerHandler serverHandler= new ServerHandler(socket1,login);
+        Thread th= new Thread(serverHandler);
         th.start();
       }
     }
