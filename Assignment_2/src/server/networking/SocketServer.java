@@ -9,9 +9,11 @@ import java.net.Socket;
 public class SocketServer
 {
   private Login login;
+  private ChatHandler chatHandler;
 
-  public SocketServer(Login login){
+  public SocketServer(Login login, ChatHandler chatHandler){
     this.login=login;
+    this.chatHandler=chatHandler;
   }
 
   public void startServer(){
@@ -19,9 +21,10 @@ public class SocketServer
     {
       ServerSocket socket= new ServerSocket(2001);
       System.out.println("Server starting...");
+      ConnectionPool pool= new ConnectionPool();
       while (true){
         Socket socket1= socket.accept();
-        ServerHandler serverHandler= new ServerHandler(socket1,login);
+        ServerHandler serverHandler= new ServerHandler(socket1,login,chatHandler,pool);
         Thread th= new Thread(serverHandler);
         th.start();
       }

@@ -22,4 +22,11 @@ public class Request implements Serializable
   {
     return arg;
   }
+  public enum TYPE{
+    LOGINPOSSIBLE,
+    USERADDED,
+    LISTENER,
+    ADDUSER,
+    USERLIST,
+  }
 }

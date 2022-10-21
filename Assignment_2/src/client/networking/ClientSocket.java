@@ -1,5 +1,6 @@
 package client.networking;
 
+import shared.Message;
 import shared.User;
 import shared.util.Request;
 
@@ -17,18 +18,21 @@ public class ClientSocket implements Client
 
   public ClientSocket()
   {
-    support= new PropertyChangeSupport(this);
+    support = new PropertyChangeSupport(this);
   }
 
   @Override public void listenToServer(User user)
   {
     try
     {
-      Socket socket= new Socket("localhost",2001);
-      ObjectOutputStream outputStream= new ObjectOutputStream(socket.getOutputStream());
-      ObjectInputStream inputStream= new ObjectInputStream(socket.getInputStream());
+      Socket socket = new Socket("localhost", 2001);
+      ObjectOutputStream outputStream = new ObjectOutputStream(
+          socket.getOutputStream());
+      ObjectInputStream inputStream = new ObjectInputStream(
+          socket.getInputStream());
 
-      Thread th= new Thread(() -> listenToServer(inputStream,outputStream,user));
+      Thread th = new Thread(
+          () -> listenToServer(inputStream, outputStream, user));
       th.start();
     }
     catch (IOException e)
@@ -39,13 +43,13 @@ public class ClientSocket implements Client
 
   @Override public List<String> getUserList()
   {
-    Request response= request(null,"UserList");
+    Request response = request(null, Request.TYPE.USERLIST.toString());
     return (List<String>) response.getArg();
   }
 
   @Override public boolean addUser(User user1)
   {
-    Request response= request(user1,"addUser");
+    Request response = request(user1, Request.TYPE.ADDUSER.toString());
     assert response != null;
     return (boolean) response.getArg();
   }
@@ -54,11 +58,11 @@ public class ClientSocket implements Client
   {
     try
     {
-      Request response= request(user,"LoginPossible");
-      System.out.println("client socket");
+      Request response = request(user, Request.TYPE.LOGINPOSSIBLE.toString());
       assert response != null;
-      boolean isPossible= (boolean) response.getArg();
-      if (isPossible){
+      boolean isPossible = (boolean) response.getArg();
+      if (isPossible)
+      {
         listenToServer(user);
       }
       return isPossible;
@@ -70,12 +74,26 @@ public class ClientSocket implements Client
     return false;
   }
 
-  private Request request(Object arg, String type){
+  @Override public void sendMessage(Message message)
+  {
+    Request response= request(message,"message");
+  }
+
+  @Override public List<Message> getMessage()
+  {
+    Request response= request(null,"message");
+    return (List<Message>) response.getArg();
+  }
+
+  private Request request(Object arg, String type)
+  {
     try
     {
-      Socket socket= new Socket("localhost",2001);
-      ObjectOutputStream outputStream= new ObjectOutputStream(socket.getOutputStream());
-      ObjectInputStream inputStream= new ObjectInputStream(socket.getInputStream());
+      Socket socket = new Socket("localhost", 2001);
+      ObjectOutputStream outputStream = new ObjectOutputStream(
+          socket.getOutputStream());
+      ObjectInputStream inputStream = new ObjectInputStream(
+          socket.getInputStream());
       outputStream.writeObject(new Request(type, arg));
       return (Request) inputStream.readObject();
     }
@@ -86,14 +104,21 @@ public class ClientSocket implements Client
     return null;
   }
 
-  private void listenToServer(ObjectInputStream inputStream,ObjectOutputStream outputStream, User user){
+  private void listenToServer(ObjectInputStream inputStream,
+      ObjectOutputStream outputStream, User user)
+  {
     try
     {
-      outputStream.writeObject(new Request("Listener",user));
-      while (true){
-        Request response= (Request) inputStream.readObject();
-        if (response.getType().equals("userAdded")){
-          support.firePropertyChange("userAdded",null,response.getArg());
+      outputStream.writeObject(new Request("Listener", user));
+      while (true)
+      {
+        Request response = (Request) inputStream.readObject();
+        if (response.getType().equals(Request.TYPE.USERADDED.toString()))
+        {
+          support.firePropertyChange(Request.TYPE.USERADDED.toString(), null, response.getArg());
+        }
+        else if(response.getType().equals("message")){
+          support.firePropertyChange("message",null,response.getArg());
         }
       }
     }

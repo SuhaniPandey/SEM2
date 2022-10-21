@@ -1,10 +1,7 @@
 package client.core;
 
-import client.views.Chat.ChatController;
-import client.views.Chat.ChatViewModel;
 import client.views.Login.LoginController;
 import client.views.Register.RegisterController;
-import client.views.ViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

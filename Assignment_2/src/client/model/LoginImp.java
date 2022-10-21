@@ -6,6 +6,8 @@ import shared.User;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginImp implements LoginModel
 {
@@ -40,6 +42,11 @@ public class LoginImp implements LoginModel
     boolean isloginPossible= client.login(user);
     if (isloginPossible)this.user=user;
     return isloginPossible;
+  }
+
+  @Override public List<String> getAllUsers()
+  {
+    return client.getUserList();
   }
 
   @Override public void addListener(String eventName,

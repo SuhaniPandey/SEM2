@@ -33,11 +33,12 @@ public class LoginViewModel
     return label;
   }
 
-  public boolean login(String username, String password){
-    User user= new User(username,password);
-    if (!modelFactory.getLoginModel().login(user)){
+  public boolean login(){
+    User user= new User(username.get(),password.get());//.get
+
+   if (!modelFactory.getLoginModel().login(user)){
       label.set("Username or password is incorrect");
-      return false;
+    return false;
     }
     return true;
   }

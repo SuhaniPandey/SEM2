@@ -22,12 +22,13 @@ public class ListOfUsers
 
   public ArrayList<String> userNames(){
     ArrayList<String> usernames= new ArrayList<>();
-    for (int i = 0; i < usernames.size(); i++)
+    for (int i = 0; i < users.size(); i++)
     {
       usernames.add(users.get(i).getUserName());
     }
     return usernames;
   }
+
 
   public boolean haveUsers(User user){
     for (int i = 0; i < users.size(); i++)

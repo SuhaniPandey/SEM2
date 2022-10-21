@@ -31,9 +31,9 @@ public class LoginController
   }
   public void onLoginButton() throws IOException
   {
-    System.out.println("ABC");
-    if (loginViewModel.login(usernameTextField.getText(),passwordtextField.getText())){
-      System.out.println("inside if");
+    // error when login method is called
+    if (loginViewModel.login()){
+      //System.out.println("inside if");
       viewHandler.openGlobalChatPage();
     }
   }

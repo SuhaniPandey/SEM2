@@ -1,6 +1,5 @@
 package client.core;
 
-import client.views.Chat.ChatViewModel;
 import client.views.Login.LoginViewModel;
 import client.views.Register.RegisterViewModel;
 
