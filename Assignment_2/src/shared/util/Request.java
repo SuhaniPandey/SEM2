@@ -24,7 +24,7 @@ public class Request implements Serializable
   }
   public enum TYPE{
     LOGINPOSSIBLE,
-    USERADDED,
+    ONLOGGEDINADDUSER,
     LISTENER,
     ADDUSER,
     USERLIST,

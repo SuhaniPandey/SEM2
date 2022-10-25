@@ -1,7 +1,8 @@
 package client.core;
 
-import client.views.Login.LoginController;
-import client.views.Register.RegisterController;
+import client.views.chat.ChatController;
+import client.views.login.LoginController;
+import client.views.register.RegisterController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,9 +29,9 @@ public class ViewHandler
   public void openLoginPage(){
     FXMLLoader loader= new FXMLLoader();
 
-    Parent root= loadFXMLFiles("/client/views/Login/Login.fxml",loader);
+    Parent root= loadFXMLFiles("/client/views/login/Login.fxml",loader);
     LoginController loginController= loader.getController();
-    loginController.init(this, viewModelFactory.getLoginViewModel());
+    loginController.init(this, viewModelFactory);
 
     loginScene= new Scene(root);
     stage.setTitle("Login");
@@ -44,10 +45,10 @@ public class ViewHandler
 
 
   FXMLLoader loader= new FXMLLoader();
-    Parent root= loadFXMLFiles("/client/views/Register/Register.fxml",loader);
+    Parent root= loadFXMLFiles("/client/views/register/Register.fxml",loader);
 
     RegisterController registerController= loader.getController();
-    registerController.init(this,viewModelFactory.getRegisterViewModel());
+    registerController.init(this,viewModelFactory);
 
     registerScene= new Scene(root);
     stage.setTitle("Register");
@@ -58,10 +59,10 @@ public class ViewHandler
 
   public void openGlobalChatPage(){
     FXMLLoader loader= new FXMLLoader();
-    Parent root= loadFXMLFiles("/client/views/Chat/Chat.fxml",loader);
+    Parent root= loadFXMLFiles("/client/views/chat/Chat.fxml",loader);
 
     ChatController chatController = loader.getController();
-    chatController.init(this,viewModelFactory.getChatViewModel());
+    chatController.init(this,viewModelFactory);
 
     globalChatScene= new Scene(root);
     stage.setTitle("Global Chat");
@@ -72,10 +73,10 @@ public class ViewHandler
 
   public void openIndivisualChatPage(){
     FXMLLoader loader= new FXMLLoader();
-    Parent root= loadFXMLFiles("/client/views/Chat/IndivisualChat.fxml",loader);
+    Parent root= loadFXMLFiles("/client/views/chat/IndivisualChat.fxml",loader);
 
     ChatController chatController= loader.getController();
-    chatController.init(this,viewModelFactory.getChatViewModel());
+    chatController.init(this,viewModelFactory);
 
     indivisualChatScene= new Scene(root);
     stage.setTitle("Indivisual Chat");

@@ -1,10 +1,12 @@
 package server.networking;
 
+import server.model.ChatHandler;
 import server.model.Login;
 import shared.Message;
 import shared.User;
 import shared.util.Request;
 
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -21,7 +23,7 @@ public class ServerHandler implements Runnable
   private ObjectOutputStream outputStream;
   private ObjectInputStream inputStream;
 
-  public ServerHandler(Socket socket,Login login,ChatHandler chatHandler,ConnectionPool pool){
+  public ServerHandler(Socket socket,Login login,ConnectionPool pool,ChatHandler chatHandler){
     this.socket=socket;
     this.login=login;
     this.chatHandler=chatHandler;
@@ -47,42 +49,87 @@ public class ServerHandler implements Runnable
         Request response= (Request) inputStream.readObject();
 
 
-//        if ("Listener".equals(response.getType())) {
-//           login.addListener("NewListener",this::onNewListener);
-//}
+        if ("Listener".equals(response.getType())) {
+          this.user= (User) response.getArg();
+          pool.addConnection(this);
+          login.addListener(Request.TYPE.ONLOGGEDINADDUSER.toString(),this::onUserLoggedIn);
+          chatHandler.addListener("addMessage",this::messageAdded);
+
+        }
         if (Request.TYPE.ADDUSER.toString().equals(response.getType())){
           boolean temp= login.addUser((User) response.getArg());
           outputStream.writeObject(new Request(Request.TYPE.ADDUSER.toString(),temp));
 
           break;
-        }else if (Request.TYPE.LOGINPOSSIBLE.toString().equals(response.getType())){
-          boolean temp= login.login((User) response.getArg());
-          if (temp){
-            this.user=user;
-          //System.out.println(temp + " server handler");
-          outputStream.writeObject(new Request(Request.TYPE.LOGINPOSSIBLE.toString(),temp));
+        }else if (Request.TYPE.LOGINPOSSIBLE.toString().equals(response.getType()))
+        {
+          boolean temp = login.login((User) response.getArg());
+          if (temp)
+          {
+            this.user = user;
+            //System.out.println(temp + " server handler");
+            outputStream.writeObject(new Request(Request.TYPE.LOGINPOSSIBLE.toString(), temp));
 
-            pool.broadcastUserName((User)response.getArg());
-          }else if ("UserList".equals(response.getType())){
+            pool.broadcastUserName((User) response.getArg());
+          }
+          break;
+        }else if (Request.TYPE.USERLIST.toString().equals(response.getType())){
             List<String> loginAllUsers = login.getAllUsers();
             outputStream.writeObject(new Request(Request.TYPE.USERLIST.toString(),loginAllUsers));
+            break;
           }
-          else if("message".equals(response.getType())){
-            chatHandler.addMessage((Message) response.getArg());
+          else if("addMessage".equals(response.getType())){
+            chatHandler.addMessages((Message) response.getArg());
             pool.broadcastMessage((Message) response.getArg());
+            break;
           }
+          else if ("getMessage".equals(response.getType())){
+            List<Message> messages= chatHandler.getMessages();
+            outputStream.writeObject(new Request("getMessage",messages));
         }
-      }
+        }
       catch (IOException | ClassNotFoundException e)
       {
         e.printStackTrace();
       }
     }
+    }
+
+  private void messageAdded(PropertyChangeEvent event)
+  {
+    try
+    {
+      outputStream.writeObject(new Request(event.getPropertyName(),event.getNewValue()));
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
+
+  }
+
+  private void onUserLoggedIn(PropertyChangeEvent event)
+  {
+    try
+    {
+      outputStream.writeObject(new Request(event.getPropertyName(),event.getNewValue()));
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   public void sendMessageToClient(Message msg)
   {
-
+    try
+    {
+      outputStream.writeObject(new Request("addMessage",msg));
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   public User getUser()
@@ -94,7 +141,7 @@ public class ServerHandler implements Runnable
   {
     try
     {
-      outputStream.writeObject(new Request(Request.TYPE.USERADDED.toString(),users));
+      outputStream.writeObject(new Request(Request.TYPE.ONLOGGEDINADDUSER.toString(),users));
     }
     catch (IOException e)
     {
@@ -102,15 +149,5 @@ public class ServerHandler implements Runnable
     }
   }
 
-  //  private void onNewListener(PropertyChangeEvent event)
-//  {
-//    try
-//    {
-//      outputStream.writeObject(new Request(event.getPropertyName(),event.getNewValue()));
-//    }
-//    catch (IOException e)
-//    {
-//      e.printStackTrace();
-//    }
-//  }
+
 }

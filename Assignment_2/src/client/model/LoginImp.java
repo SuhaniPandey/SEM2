@@ -18,14 +18,14 @@ public class LoginImp implements LoginModel
   {
     this.client=client;
     support= new PropertyChangeSupport(this);
-    client.addListener("userAdded",this::userAdded);
+   // client.addListener("userAdded",this::userAdded);
   }
 
-  private void userAdded(PropertyChangeEvent event)
+ /* private void userAdded(PropertyChangeEvent event)
   {
-    support.firePropertyChange("userAdded",null,event.getNewValue());
+    support.firePropertyChange(event);
   }
-
+*/
   @Override public boolean addUser(String username, String password)
   {
     User user1= new User(username,password);

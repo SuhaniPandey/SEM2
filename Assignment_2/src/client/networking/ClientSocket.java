@@ -31,6 +31,7 @@ public class ClientSocket implements Client
       ObjectInputStream inputStream = new ObjectInputStream(
           socket.getInputStream());
 
+      //why new thread is needed??
       Thread th = new Thread(
           () -> listenToServer(inputStream, outputStream, user));
       th.start();
@@ -64,6 +65,8 @@ public class ClientSocket implements Client
       if (isPossible)
       {
         listenToServer(user);
+        //not sure............................
+        support.firePropertyChange("userAdded",null,user);
       }
       return isPossible;
     }
@@ -74,15 +77,15 @@ public class ClientSocket implements Client
     return false;
   }
 
-  @Override public void sendMessage(Message message)
+  @Override public List<Message> getMessages()
   {
-    Request response= request(message,"message");
+    Request response= request(null,"getMessages");
+    return (List<Message>) response.getArg();
   }
 
-  @Override public List<Message> getMessage()
+  @Override public void sendMessage(Message message)
   {
-    Request response= request(null,"message");
-    return (List<Message>) response.getArg();
+    Request response= request(message,"addMessage");
   }
 
   private Request request(Object arg, String type)
@@ -113,12 +116,11 @@ public class ClientSocket implements Client
       while (true)
       {
         Request response = (Request) inputStream.readObject();
-        if (response.getType().equals(Request.TYPE.USERADDED.toString()))
-        {
-          support.firePropertyChange(Request.TYPE.USERADDED.toString(), null, response.getArg());
+        if(response.getType().equals("addMessage")){
+          support.firePropertyChange("addMessage",null,response.getArg());
         }
-        else if(response.getType().equals("message")){
-          support.firePropertyChange("message",null,response.getArg());
+        else if (response.getType().equals(Request.TYPE.ONLOGGEDINADDUSER.toString())){
+          support.firePropertyChange(Request.TYPE.ONLOGGEDINADDUSER.toString(),null,response.getArg());
         }
       }
     }

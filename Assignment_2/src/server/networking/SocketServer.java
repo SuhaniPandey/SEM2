@@ -1,5 +1,6 @@
 package server.networking;
 
+import server.model.ChatHandler;
 import server.model.Login;
 
 import java.io.IOException;
@@ -11,7 +12,7 @@ public class SocketServer
   private Login login;
   private ChatHandler chatHandler;
 
-  public SocketServer(Login login, ChatHandler chatHandler){
+  public SocketServer(Login login,ChatHandler chatHandler){
     this.login=login;
     this.chatHandler=chatHandler;
   }
@@ -24,7 +25,7 @@ public class SocketServer
       ConnectionPool pool= new ConnectionPool();
       while (true){
         Socket socket1= socket.accept();
-        ServerHandler serverHandler= new ServerHandler(socket1,login,chatHandler,pool);
+        ServerHandler serverHandler= new ServerHandler(socket1,login,pool,chatHandler);
         Thread th= new Thread(serverHandler);
         th.start();
       }

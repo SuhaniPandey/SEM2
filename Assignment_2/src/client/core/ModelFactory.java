@@ -16,7 +16,7 @@ public class ModelFactory
 
   public ChatModel getChatModel(){
     if (chatModel== null){
-      this.chatModel= new ChatImp(clientFactory.getClient());
+      this.chatModel= new ChatModelImpl(clientFactory.getClient());
     }
     return chatModel;
   }

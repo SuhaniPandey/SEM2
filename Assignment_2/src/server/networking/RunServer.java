@@ -1,5 +1,6 @@
 package server.networking;
 
+import server.model.ChatHandlerImpl;
 import server.model.LoginHandler;
 
 public class RunServer

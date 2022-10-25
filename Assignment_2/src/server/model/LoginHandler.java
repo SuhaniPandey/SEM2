@@ -2,6 +2,7 @@ package server.model;
 
 import shared.ListOfUsers;
 import shared.User;
+import shared.util.Request;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -30,7 +31,8 @@ public class LoginHandler implements Login
   {
     boolean status = listOfUsers.haveUsers(user);
     if (status) {
-      support.firePropertyChange("NewListener",null,user);
+     // support.firePropertyChange("NewListener",null,user);
+      support.firePropertyChange(Request.TYPE.ONLOGGEDINADDUSER.toString(),null,user);
     }
     return status;
   }

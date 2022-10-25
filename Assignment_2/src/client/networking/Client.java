@@ -14,6 +14,6 @@ public interface Client extends Subject
   boolean addUser(User user1);
 
   boolean login(User user);
+  List<Message> getMessages();
   void sendMessage(Message message);
-  List<Message> getMessage();
 }

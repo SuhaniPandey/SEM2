@@ -1,7 +1,8 @@
 package client.core;
 
-import client.views.Login.LoginViewModel;
-import client.views.Register.RegisterViewModel;
+import client.views.chat.ChatViewModel;
+import client.views.login.LoginViewModel;
+import client.views.register.RegisterViewModel;
 
 public class ViewModelFactory
 {
