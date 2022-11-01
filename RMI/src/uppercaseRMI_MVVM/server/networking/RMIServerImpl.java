@@ -24,6 +24,7 @@ public class RMIServerImpl implements RMIServer
     this.textManager=textManager;
   }
 
+
   public void startServer() throws RemoteException, AlreadyBoundException
   {
     Registry registry=LocateRegistry.createRegistry(1099);
@@ -44,16 +45,15 @@ public class RMIServerImpl implements RMIServer
   @Override public void registerClient(CLientCallBack cLient)
   {
    PropertyChangeListener listener=null;
-   PropertyChangeListener finalListener = listener;
+  // PropertyChangeListener finalListener = listener;
        listener= evt -> {
       try
       {
-        cLient.update(
-            (LogEntry) evt.getNewValue());
+        cLient.update((LogEntry) evt.getNewValue());
       }
       catch (RemoteException e)
       {
-        textManager.removeListener("NewLogEntry",finalListener);
+        //textManager.removeListener("NewLogEntry",finalListener);
       }
     };
     textManager.addListener("NewLogEntry",listener);
