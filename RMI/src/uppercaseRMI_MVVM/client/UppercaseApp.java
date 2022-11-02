@@ -16,6 +16,5 @@ public class UppercaseApp extends Application {
         ViewHandler vh = new ViewHandler(vmf);
         vh.start();
 
-
     }
 }
